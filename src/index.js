@@ -1,57 +1,18 @@
-const fs = require('fs');
-const path = require('path');
-
 const glob = require('glob');
-const t = require('@babel/types');
-const walk = require('babylon-walk');
+const Harness = require('./Harness');
+const findInjectors = require('./transforms/findInjectors');
 
-const parser = require('./parser');
+function run(pattern, opts = {}) {
+  const files = glob.sync(pattern.replace(/^~/, process.env.HOME), { nodir: true, absolute: true });
 
-function findInject(node, state) {
-  if (!t.isMemberExpression(node.left)) {
-    return;
-  }
+  const state = {};
 
-  if (!t.isIdentifier(node.left.property)) {
-    return;
-  }
-
-  if (node.left.property.name !== '$inject') {
-    return;
-  }
-
-  const arr = node.right.elements.map(e => e.value);
-
-  arr.forEach(value => {
-    if (!/^\$/.test(value)) {
-      return;
-    }
-
-    if (state.graph[value] == null) {
-      state.graph[value] = 0;
-    }
-
-    state.graph[value]++;
+  files.forEach(fp => {
+    const harness = new Harness(fp, { dryRun: opts.dryRun });
+    harness.run([findInjectors], state);
   });
+
+  console.log(state);
 }
 
-function transform(fp, state = {}) {
-  const source = fs.readFileSync(fp, 'utf8');
-
-  const ast = parser.parse(source);
-
-  const visitors = {
-    AssignmentExpression(node, state) {
-      findInject(node, state);
-    }
-  };
-
-  walk.simple(ast, visitors, state);
-
-  console.log(state.graph);
-}
-
-function run(pattern) {
-  const files = glob.sync(pattern, { nodir: true, absolute: true });
-
-}
+run('~/projects/dle-course-assembly/app/**/*.ts');

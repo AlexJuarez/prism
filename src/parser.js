@@ -9,6 +9,7 @@ function parse(code, options = {}) {
     'decorators-legacy',
     'exportDefaultFrom',
     'exportNamespaceFrom',
+    'objectRestSpread',
     'functionBind'
   ];
 
