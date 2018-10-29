@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node index.js",
-    "prettify": "prettier --write src/**/*.js", 
+    "prettify": "prettier --write src/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,10 +15,10 @@
     "@babel/parser": "^7.1.3",
     "@babel/types": "^7.1.3",
     "babylon-walk": "^1.0.2",
-    "glob": "^7.1.3",
-    "jscodeshift": "^0.5.1"
+    "glob": "^7.1.3"
   },
   "devDependencies": {
+    "jest": "^23.6.0",
     "prettier": "1.14.3"
   }
 }

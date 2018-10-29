@@ -1,5 +1,5 @@
-const run = require('./run');
-const Harness = require('./Harness');
+const run = require('./core/run');
+const Harness = require('./core/Harness');
 
 module.exports = {
   run,

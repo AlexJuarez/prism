@@ -5,12 +5,20 @@ const generate = require('@babel/generator');
 const parser = require('./parser');
 
 class Harness {
-  constructor(fp, opts = { dryRun: false }) {
-    this.options = {...opts};
-    this.filePath = fp;
-    this.source = fs.readFileSync(fp).toString();
-    this.ast = parser.parse(this.source);
+  constructor(opts = {}) {
+    const options = (this.options = { filePath: null, dryRun: false, source: null, parser, ...opts });
     this.mutations = 0;
+    this.source = options.source;
+    this.ast = null;
+    this.parser = options.parser;
+
+    if (options.filePath != null && options.source == null) {
+      this.read(options.filePath);
+    }
+
+    if (this.source != null) {
+      this.ast = this.parser.parse(this.source);
+    }
   }
 
   execute(transform, state) {
@@ -27,7 +35,7 @@ class Harness {
       console.error(`Invalid transforms for: ${this.filePath}`);
       return;
     }
-    
+
     transforms.forEach(transform => this.execute(transform, state));
   }
 
@@ -37,19 +45,24 @@ class Harness {
     if (this.mutations === 0) {
       return;
     }
-    
+
     this.write();
   }
 
   print() {
     try {
-      const { code } = generate(ast, { retainLines: true, retainFunctionParens: true }, source);
+      const { code } = generate(this.ast, { retainLines: true, retainFunctionParens: true }, this.source);
       return code;
     } catch (err) {
       console.error(err);
     }
-    
+
     return null;
+  }
+
+  read(fp) {
+    this.source = fs.readFileSync(fp).toString();
+    this.ast = this.parser.parse(this.source);
   }
 
   write() {
