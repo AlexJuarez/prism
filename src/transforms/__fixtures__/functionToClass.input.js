@@ -1,11 +1,3 @@
-/**
- * @ngInject
- * @ngdoc service
- * @name app.asset-metadata.service:assetMetadataFactory
- * @description Handles launching preview window and showing errors if data isn't available
- * @author Chris_Haigy
- */
-
 assetMetadataFactory.$inject = ['mddbService', 'modalService'];
 
 function assetMetadataFactory(mddbService, modalService) {

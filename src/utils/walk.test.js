@@ -9,13 +9,13 @@ describe('walk', () => {
   let ast;
 
   beforeEach(() => {
-    ast = parser.parse(fs.readFileSync(path.join(__dirname, 'walk.js'), 'utf8'));
+    ast = parser.parse(fs.readFileSync(path.join(__dirname, 'codemod.js'), 'utf8'));
   });
 
   test('find', () => {
     const root = source(ast);
-    const nodes = root.find(t.identifier, { name: 'function' });
+    const nodes = root.find(t.identifier, { name: 'queue' });
 
-    expect(nodes.size()).toEqual(1);
+    expect(nodes.size()).toEqual(5);
   });
 });

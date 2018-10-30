@@ -24,9 +24,10 @@ function runTest(
   },
   testFilePrefix = transformName,
 ) {
+  const { inputSuffix, outputSuffix } = options;
   const fixtureDir = path.join(dirName, '..', '__fixtures__');
   const inputPath = path.join(fixtureDir, testFilePrefix + inputSuffix);
-  const outputPath = path.join(fixtureDir, testFilePrefix, outputSuffix);
+  const outputPath = path.join(fixtureDir, testFilePrefix + outputSuffix);
   const source = fs.readFileSync(inputPath, 'utf8');
   const expectedOutput = fs.readFileSync(outputPath, 'utf8');
 

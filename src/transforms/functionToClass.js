@@ -87,6 +87,8 @@ function transformer(ast, state) {
 
       const name = capitalize(oldName.replace('Factory', 'Service'));
 
+      root.find(t.identifier, { name: oldName }).forEach(path => (path.node.name = name));
+
       const cls = createClass(name, methods, [createDecorator('Injectable')]);
 
       imports.push(createSpecificImport(['Injectable', 'Inject'], '@angular/core'));

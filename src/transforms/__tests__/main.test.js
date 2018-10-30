@@ -1,3 +1,3 @@
 const { defineTest } = require('../../utils/testUtils');
 
-defineTest(__dirname, 'test');
+defineTest(__dirname, 'functionToClass');
