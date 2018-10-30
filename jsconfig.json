@@ -4,6 +4,7 @@
     "noLib": true,
     "baseUrl": "./src",
     "checkJs": false,
+    "experimentalDecorators": true,
   },
   "include": [
     "src/**/*"
@@ -12,5 +13,4 @@
     "node_modules"
   ],
   "module": "system",
-
 }

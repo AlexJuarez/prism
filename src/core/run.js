@@ -10,8 +10,6 @@ function run(pattern, transforms, opts = {}) {
     const harness = new Harness({ filePath: fp, dryRun: opts.dryRun });
     harness.run(transforms, state);
   });
-
-  console.log(state);
 }
 
 module.exports = run;

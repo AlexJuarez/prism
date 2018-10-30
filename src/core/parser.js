@@ -6,11 +6,11 @@ function parse(code, options = {}) {
     'classProperties',
     'classPrivateProperties',
     'classPrivateMethods',
-    'decorators-legacy',
+    ['decorators', { decoratorsBeforeExport: true, legacy: true }],
     'exportDefaultFrom',
     'exportNamespaceFrom',
     'objectRestSpread',
-    'functionBind'
+    'functionBind',
   ];
 
   return parser.parse(code, { plugins, sourceType: 'module', ...options });

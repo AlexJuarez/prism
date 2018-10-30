@@ -1,6 +1,7 @@
 const fs = require('fs');
 
-const generate = require('@babel/generator');
+const generate = require('@babel/generator').default;
+const format = require('./format');
 
 const parser = require('./parser');
 
@@ -51,8 +52,13 @@ class Harness {
 
   print() {
     try {
-      const { code } = generate(this.ast, { retainLines: true, retainFunctionParens: true }, this.source);
-      return code;
+      const { code } = generate(
+        this.ast,
+        { retainLines: true, retainFunctionParens: true, compact: false },
+        this.source,
+      );
+
+      return format(code);
     } catch (err) {
       console.error(err);
     }
