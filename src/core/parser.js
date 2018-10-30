@@ -2,11 +2,11 @@ const parser = require('@babel/parser');
 
 function parse(code, options = {}) {
   const plugins = [
-    'typescript',
+    ['typescript', { allExtensions: true }],
     'classProperties',
     'classPrivateProperties',
     'classPrivateMethods',
-    ['decorators', { decoratorsBeforeExport: true, legacy: true }],
+    'decorators-legacy',
     'exportDefaultFrom',
     'exportNamespaceFrom',
     'objectRestSpread',

@@ -17,6 +17,19 @@ function createClassMethod(name, params = [], body) {
   return t.classMethod('method', t.identifier(name), params, body);
 }
 
+function createConstructor(paramNames) {
+  return t.classMethod(
+    'constructor',
+    t.identifier('constructor'),
+    paramNames.map(name => {
+      const param = t.identifier(name);
+      param.decorators = [createDecorator('Inject', [t.stringLiteral(name)])];
+      return param;
+    }),
+    t.blockStatement([]),
+  );
+}
+
 function createSpecificImport(names, from) {
   return t.importDeclaration(
     names.map(name => t.importSpecifier(t.identifier(name), t.identifier(name))),
@@ -63,6 +76,14 @@ function transformer(ast, state) {
           inject.push(...path.node.right.elements.map(literal => literal.value));
         })
         .remove();
+
+      p.find(t.identifier, {
+        name: name => inject.indexOf(name) !== -1,
+      }).forEach(path => {
+        path.replace(t.memberExpression(t.identifier('this'), path.node));
+      });
+
+      methods.unshift(createConstructor(inject));
 
       const name = capitalize(oldName.replace('Factory', 'Service'));
 

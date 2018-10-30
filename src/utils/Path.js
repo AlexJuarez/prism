@@ -25,8 +25,15 @@ class Path {
   }
 
   prune() {
-    this.parent.leadingComments.push(...(this.node.leadingComments || []));
-    this.parent.trailingComments.push(...(this.node.trailingComments || []));
+    if (this.parent.node.leadingComments == null) {
+      this.parent.node.leadingComments = [];
+    }
+
+    if (this.parent.node.trailingComments == null) {
+      this.parent.node.trailingComments = [];
+    }
+    this.parent.node.leadingComments.push(...(this.node.leadingComments || []));
+    this.parent.node.trailingComments.push(...(this.node.trailingComments || []));
 
     delete this.parent.node[this.key];
 
