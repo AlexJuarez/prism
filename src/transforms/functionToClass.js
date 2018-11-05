@@ -1,41 +1,13 @@
 const codemod = require('../utils/codemod');
 const t = require('@babel/types');
-
-function capitalize(str) {
-  return `${str.substr(0, 1).toUpperCase()}${str.substr(1)}`;
-}
-
-function createClass(name, body, decorators) {
-  return t.classDeclaration(t.identifier(name), null, t.classBody(body), decorators);
-}
-
-function createDecorator(name, args = []) {
-  return t.decorator(t.callExpression(t.identifier(name), args));
-}
-
-function createClassMethod(name, params = [], body) {
-  return t.classMethod('method', t.identifier(name), params, body);
-}
-
-function createConstructor(paramNames) {
-  return t.classMethod(
-    'constructor',
-    t.identifier('constructor'),
-    paramNames.map(name => {
-      const param = t.identifier(name);
-      param.decorators = [createDecorator('Inject', [t.stringLiteral(name)])];
-      return param;
-    }),
-    t.blockStatement([]),
-  );
-}
-
-function createSpecificImport(names, from) {
-  return t.importDeclaration(
-    names.map(name => t.importSpecifier(t.identifier(name), t.identifier(name))),
-    t.stringLiteral(from),
-  );
-}
+const {
+  capitalize,
+  createClass,
+  createClassMethod,
+  createDecorator,
+  createConstructor,
+  createSpecificImport,
+} = require('./utils');
 
 function transformer(ast, state) {
   const root = codemod(ast);

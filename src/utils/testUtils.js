@@ -28,8 +28,8 @@ function runTest(
   const fixtureDir = path.join(dirName, '..', '__fixtures__');
   const inputPath = path.join(fixtureDir, testFilePrefix + inputSuffix);
   const outputPath = path.join(fixtureDir, testFilePrefix + outputSuffix);
-  const source = fs.readFileSync(inputPath, 'utf8');
-  const expectedOutput = fs.readFileSync(outputPath, 'utf8');
+  const source = fs.readFileSync(inputPath, 'utf8').toString();
+  const expectedOutput = fs.readFileSync(outputPath, 'utf8').toString();
 
   const module = require(path.join(dirName, '..', `${transformName}.js`));
   runInlineTest(

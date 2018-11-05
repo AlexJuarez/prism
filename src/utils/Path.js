@@ -25,6 +25,11 @@ class Path {
   }
 
   prune() {
+    if (this.parent == null) {
+      console.log('parent already removed');
+      return;
+    }
+
     if (this.parent.node.leadingComments == null) {
       this.parent.node.leadingComments = [];
     }
@@ -32,10 +37,17 @@ class Path {
     if (this.parent.node.trailingComments == null) {
       this.parent.node.trailingComments = [];
     }
+
     this.parent.node.leadingComments.push(...(this.node.leadingComments || []));
     this.parent.node.trailingComments.push(...(this.node.trailingComments || []));
+    
+    if (Array.isArray(this.parent.node[this.key])) {
+      const idx = this.parent.node[this.key].indexOf(this.node);
 
-    delete this.parent.node[this.key];
+      this.parent.node[this.key].splice(idx, 1);
+    } else {
+      delete this.parent.node[this.key];
+    }
 
     this.parent = null;
     this.key = null;
