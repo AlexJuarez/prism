@@ -8,7 +8,7 @@ function testFunction() {
 
   Promise.all([]);
 
-  resolve.Promise();
+  Promise.resolve(['test']);
 
   deferPromise();
 }

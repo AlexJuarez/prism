@@ -41,8 +41,8 @@ function find(ast, type, selectors) {
     const { node } = path;
 
     Object.keys(node).forEach(key => {
-      if (node[key] != null && node[key].type != null) {
-        queue.push(new Path(node[key], path, key));
+      if (node[key] == null || node[key].type == null && !Array.isArray(node[key])) {
+        return;
       }
 
       if (Array.isArray(node[key])) {
@@ -51,7 +51,11 @@ function find(ast, type, selectors) {
             queue.push(new Path(e, path, key));
           }
         });
+
+        return;
       }
+
+      queue.push(new Path(node[key], path, key));
     });
 
     if (node.type !== type) {

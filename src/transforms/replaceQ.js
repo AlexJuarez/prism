@@ -36,7 +36,7 @@ function transformer(ast, state) {
         break;
       case 'when':
         path.replace(
-          utils.createCallExpression(['Promise', 'resolve'])
+          utils.createCallExpression(['Promise', 'resolve'], path.node.arguments)
         );
         break;
       case 'defer':

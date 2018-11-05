@@ -1,4 +1,5 @@
 const t = require('@babel/types');
+const createNode = require('./createNode');
 
 function capitalize(str) {
   return `${str.substr(0, 1).toUpperCase()}${str.substr(1)}`;
@@ -26,7 +27,7 @@ function createCallExpression(props, params = []) {
   while (queue.length) {
     const temp = t.identifier(queue.pop());
 
-    curr = t.memberExpression(temp, curr);
+    curr = t.memberExpression(curr, temp);
   }
 
   return t.callExpression(curr, params);
@@ -60,4 +61,5 @@ module.exports = {
   createDecorator,
   createConstructor,
   createSpecificImport,
+  createNode,
 };
