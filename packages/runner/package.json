@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A ast transform runner",
   "main": "index.js",
+  "public": true,
   "scripts": {
     "test": "jest"
   },
