@@ -1,7 +1,5 @@
-const run = require('./core/run');
-const Harness = require('./core/Harness');
+const { run } = require('@prism/runner');
 
 module.exports = {
   run,
-  Harness,
 };

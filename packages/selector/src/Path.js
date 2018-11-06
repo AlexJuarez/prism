@@ -25,11 +25,6 @@ class Path {
   }
 
   prune() {
-    if (this.parent == null) {
-      console.log('parent already removed');
-      return;
-    }
-
     if (this.parent.node.leadingComments == null) {
       this.parent.node.leadingComments = [];
     }

@@ -1,4 +1,4 @@
-const codemod = require('../utils/codemod');
+const prism = require('@prism/selector');
 const t = require('@babel/types');
 const {
   capitalize,
@@ -7,10 +7,10 @@ const {
   createDecorator,
   createConstructor,
   createSpecificImport,
-} = require('./utils');
+} = require('../utils');
 
 function transformer(ast, state) {
-  const root = codemod(ast);
+  const root = prism(ast);
   const imports = [];
 
   let mutations = 0;
@@ -22,7 +22,7 @@ function transformer(ast, state) {
       },
     })
     .forEach(path => {
-      const p = codemod(path.node.body);
+      const p = prism(path.node.body);
       const methods = p
         .find(t.functionDeclaration)
         .map(d => {

@@ -1,0 +1,8 @@
+{
+  "name": "@prism/selector",
+  "version": "1.0.0",
+  "description": "A ast selector inspired by jscodeshift",
+  "main": "index.js",
+  "author": "Alex Juarez",
+  "license": "ISC"
+}

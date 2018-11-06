@@ -1,15 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const Harness = require('../core/Harness');
+const { runInline } = require('./run');
 
 function runInlineTest(module, options, input, expectedOutput) {
   const transform = module.default ? module.default : module;
-  const harness = new Harness(input);
-
   const state = {};
 
-  harness.execute(transform, state);
-  const output = harness.print();
+  const output = runInline(input, module, state);
 
   expect((output || '').trim()).toEqual(expectedOutput.trim());
 }
@@ -18,14 +15,14 @@ function runTest(
   dirName,
   transformName,
   options = {
-    fixtureFolder: '__fixtures__',
+    fixtureFolder: '../__fixtures__',
     inputSuffix: '.input.js',
     outputSuffix: '.output.js',
   },
   testFilePrefix = transformName,
 ) {
-  const { inputSuffix, outputSuffix } = options;
-  const fixtureDir = path.join(dirName, '..', '__fixtures__');
+  const { fixtureFolder, inputSuffix, outputSuffix } = options;
+  const fixtureDir = path.join(dirName, fixtureFolder);
   const inputPath = path.join(fixtureDir, testFilePrefix + inputSuffix);
   const outputPath = path.join(fixtureDir, testFilePrefix + outputSuffix);
   const source = fs.readFileSync(inputPath, 'utf8').toString();

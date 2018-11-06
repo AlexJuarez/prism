@@ -1,6 +1,6 @@
 const t = require('@babel/types');
-const parser = require('../../core/parser');
-const codemod = require('../../utils/codemod');
+const { parser } = require('@prism/runner');
+const prism = require('@prism/selector');
 
 function clone(obj) {
   let output = obj;
@@ -23,7 +23,7 @@ function stringToNode(input) {
 
   let result = [];
 
-  codemod(ast).find(t.program).forEach(path => {
+  prism(ast).find(t.program).forEach(path => {
     result.push(...path.node.body);
   });
 

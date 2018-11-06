@@ -1,9 +1,9 @@
-const codemod = require('../utils/codemod');
+const prism = require('@prism/selector');
 const t = require('@babel/types');
-const utils = require('./utils');
+const utils = require('../../utils');
 
 function transformer(ast, state) {
-  root = codemod(ast);
+  root = prism(ast);
   let mutations = 0;
 
   root.find(t.stringLiteral, {
