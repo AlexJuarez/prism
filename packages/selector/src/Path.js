@@ -3,6 +3,14 @@ class Path {
     this.node = node;
     this.parent = parent;
     this.key = key;
+
+    let scope = this;
+
+    while (scope.parent != null && scope.node.body == null) {
+      scope = scope.parent;
+    }
+
+    this.scope = scope.node;
   }
 
   replace(node) {

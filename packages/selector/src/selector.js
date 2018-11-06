@@ -19,7 +19,7 @@ function matches(a, b) {
     return b.every(e => set.has(e));
   }
 
-  if (typeof a === 'object') {
+  if (a != null && typeof a === 'object') {
     return Object.keys(b).every(key => matches(a[key], b[key]));
   }
 

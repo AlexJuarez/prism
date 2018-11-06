@@ -17,7 +17,7 @@ function createClassMethod(name, params = [], body) {
   return t.classMethod('method', t.identifier(name), params, body);
 }
 
-function createCallExpression(props, params = []) {
+function createMemberExpression(props) {
   const queue = [...props];
 
   queue.reverse();
@@ -30,7 +30,11 @@ function createCallExpression(props, params = []) {
     curr = t.memberExpression(curr, temp);
   }
 
-  return t.callExpression(curr, params);
+  return curr;
+}
+
+function createCallExpression(props, params = []) {
+  return t.callExpression(createMemberExpression(props), params);
 }
 
 function createConstructor(paramNames) {
@@ -58,6 +62,7 @@ module.exports = {
   createClass,
   createClassMethod,
   createCallExpression,
+  createMemberExpression,
   createDecorator,
   createConstructor,
   createSpecificImport,
