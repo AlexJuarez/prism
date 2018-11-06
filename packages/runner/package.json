@@ -1,6 +1,6 @@
 {
   "name": "@prism/runner",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "A ast transform runner",
   "main": "index.js",
   "public": true,
@@ -17,5 +17,6 @@
   },
   "devDependencies": {
     "jest": "^23.6.0"
-  }
+  },
+  "gitHead": "96d553c635a2b6d0319d55eef5107629e1559154"
 }

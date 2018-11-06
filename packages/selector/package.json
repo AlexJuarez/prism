@@ -1,9 +1,10 @@
 {
   "name": "@prism/selector",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "public": true,
   "description": "A ast selector inspired by jscodeshift",
   "main": "index.js",
   "author": "Alex Juarez",
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "96d553c635a2b6d0319d55eef5107629e1559154"
 }
