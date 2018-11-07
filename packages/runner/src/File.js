@@ -28,7 +28,6 @@ class File {
       const { code } = generate(
         this.ast,
         { 
-          retainLines: true,
           retainFunctionParens: true,
           decoratorsBeforeExport: true,
           compact: false
