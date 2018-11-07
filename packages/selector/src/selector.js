@@ -19,7 +19,7 @@ function matches(a, b) {
     return b.every(e => set.has(e));
   }
 
-  if (a != null && typeof a === 'object') {
+  if (a != null && b != null && typeof a === 'object') {
     return Object.keys(b).every(key => matches(a[key], b[key]));
   }
 
@@ -47,7 +47,7 @@ function find(ast, type, selectors) {
 
       if (Array.isArray(node[key])) {
         node[key].forEach(e => {
-          if (e.type != null) {
+          if (e != null && e.type != null) {
             queue.push(new Path(e, path, key));
           }
         });
