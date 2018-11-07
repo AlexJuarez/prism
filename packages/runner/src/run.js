@@ -37,7 +37,7 @@ function run(pattern, transforms, opts = { dryRun: false, summary: false }) {
     if (opts.dryRun) {
       console.log(file.toString());
     } else {
-      file.write();
+      file.write(false);
     }
   });
 

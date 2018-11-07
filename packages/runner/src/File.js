@@ -31,7 +31,7 @@ class File {
         this.source,
       );
 
-      return format(code);
+      return code;
     } catch (err) {
       console.error(err);
     }
@@ -39,11 +39,15 @@ class File {
     return null;
   }
 
-  write() {
-    const code = this.toString();
+  write(prettify = true) {
+    let code = this.toString();
 
     if (code == null) {
       return;
+    }
+
+    if (prettify) {
+      code = format(code);
     }
 
     fs.writeFileSync(this.path, code, 'utf8');
