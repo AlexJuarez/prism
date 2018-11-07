@@ -6,7 +6,10 @@ class Path {
 
     let scope = this;
 
-    while (scope.parent != null && scope.node.body == null) {
+    while (scope.parent != null 
+      && (scope.node.type != 'ArrowFunctionExpression'
+      || scope.node.type != 'FunctionDeclaration'
+      || scope.node.type != 'Program')) {
       scope = scope.parent;
     }
 

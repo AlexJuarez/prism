@@ -15,7 +15,9 @@ function transformer(ast, state) {
 
     const variable = path.node.declarations[0].id.name;
 
-    const assignmentCount = root.find(t.assignmentExpression, {
+    let assignmentCount = 0;
+    
+    assignmentCount += root.find(t.assignmentExpression, {
       left: {
         name: variable
       }
@@ -23,7 +25,14 @@ function transformer(ast, state) {
     .filter(p => p.scope === path.scope)
     .size();
 
-    if (assignmentCount === 0) {
+    assignmentCount += root.find(t.updateExpression, {
+      argument: {
+        name: variable
+      }
+    }).filter(p => p.scope === path.scope)
+    .size();
+
+    if (assignmentCount === 0 && path.node.declarations[0].init != null) {
       path.node.kind = 'const';
     } else {
       path.node.kind = 'let';

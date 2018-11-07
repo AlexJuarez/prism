@@ -27,7 +27,12 @@ class File {
     try {
       const { code } = generate(
         this.ast,
-        { retainLines: true, retainFunctionParens: true, compact: false },
+        { 
+          retainLines: true,
+          retainFunctionParens: true,
+          decoratorsBeforeExport: true,
+          compact: false
+        },
         this.source,
       );
 
