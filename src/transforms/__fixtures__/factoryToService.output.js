@@ -3,9 +3,12 @@ import { Injectable, Inject } from '@angular/core';
 @Injectable()
 class AssetMetadataService {
   constructor(
-    @Inject('mddbService') mddbService,
-    @Inject('modalService') modalService
+    @Inject('mddbService')
+    mddbService,
+    @Inject('modalService')
+    modalService
   ) {}
+
   openMetadata(nodeOrAsset) {
     this.mddbService.getTagNames().then(tagNames => {
       this.modalService.showDialog({
@@ -14,11 +17,10 @@ class AssetMetadataService {
         sharedModel: {
           asset: nodeOrAsset,
           metadata: nodeOrAsset.rawMetadata,
-          metadataNames: tagNames
+          metadataNames: tagNames,
         },
-
         displayFooter: false,
-        buttons: []
+        buttons: [],
       });
     });
   }

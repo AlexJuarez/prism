@@ -13,7 +13,7 @@ function parse(code, options = {}) {
     'functionBind',
   ];
 
-  return parser.parse(code, { plugins, sourceType: 'module', ...options });
+  return parser.parse(code, { plugins, startLine: 1, tokens: true, sourceMaps: 'inline', sourceType: 'module', ranges: true, ...options });
 }
 
 module.exports = { parse };

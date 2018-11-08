@@ -6,9 +6,24 @@ function runInlineTest(module, options, input, expectedOutput) {
   const transform = module.default ? module.default : module;
   const state = {};
 
-  const output = runInline(input, module, state);
+  const output = runInline(input, transform, state);
 
   expect((output || '').trim()).toEqual(expectedOutput.trim());
+}
+
+function getExpectedOutput(module, input, outputPath) {
+  if (fs.existsSync(outputPath)) {
+    return fs.readFileSync(outputPath, 'utf8').toString();
+  }
+
+  const transform = module.default ? module.default : module;
+  const state = {};
+
+  const output = runInline(input, transform, state);
+
+  fs.writeFileSync(outputPath, output);
+
+  return output;
 }
 
 function runTest(
@@ -26,16 +41,19 @@ function runTest(
   const inputPath = path.join(fixtureDir, testFilePrefix + inputSuffix);
   const outputPath = path.join(fixtureDir, testFilePrefix + outputSuffix);
   const source = fs.readFileSync(inputPath, 'utf8').toString();
-  const expectedOutput = fs.readFileSync(outputPath, 'utf8').toString();
-
   const module = require(path.join(dirName, '..', `${transformName}.js`));
+
+  const input = {
+    filePath: inputPath,
+    source,
+  };
+
+  const expectedOutput = getExpectedOutput(module, input, outputPath);
+
   runInlineTest(
     module,
     options,
-    {
-      filePath: inputPath,
-      source,
-    },
+    input,
     expectedOutput,
   );
 }

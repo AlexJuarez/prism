@@ -1,4 +1,4 @@
-const test = 'test';
+let test = 'test';
 let test2 = 'test';
 test2 = '1';
 

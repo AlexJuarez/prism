@@ -46,8 +46,9 @@ function transformer(ast, state) {
         })
         .forEach(path => {
           inject.push(...path.node.right.elements.map(literal => literal.value));
-        })
-        .remove();
+
+          path.parent.prune();
+        });
 
       p.find(t.identifier, {
         name: name => inject.indexOf(name) !== -1,
@@ -72,6 +73,7 @@ function transformer(ast, state) {
   root.find(t.program).forEach(path => {
     path.node.body.unshift(...imports);
   });
+
 
   return mutations;
 }

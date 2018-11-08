@@ -1,8 +1,6 @@
 const fs = require('fs');
-const generate = require('@babel/generator').default;
-const format = require('./format');
+const recast = require('recast');
 const parser = require('./parser');
-
 
 class File {
   constructor(options = {}) {
@@ -12,7 +10,7 @@ class File {
 
     this.read();
 
-    this.ast = this.parser.parse(this.source);
+    this.ast = recast.parse(this.source, { parser });
   }
 
   read() {
@@ -25,15 +23,7 @@ class File {
 
   toString() {
     try {
-      const { code } = generate(
-        this.ast,
-        { 
-          retainFunctionParens: true,
-          decoratorsBeforeExport: true,
-          compact: false
-        },
-        this.source,
-      );
+      const { code } = recast.print(this.ast, { quote: 'single' });
 
       return code;
     } catch (err) {
@@ -43,15 +33,11 @@ class File {
     return null;
   }
 
-  write(prettify = true) {
+  write() {
     let code = this.toString();
 
     if (code == null) {
       return;
-    }
-
-    if (prettify) {
-      code = format(code);
     }
 
     fs.writeFileSync(this.path, code, 'utf8');

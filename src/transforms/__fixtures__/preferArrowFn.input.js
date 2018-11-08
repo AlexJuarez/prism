@@ -5,3 +5,9 @@ const myFn = function() {
 const myFn2 = function() {
   this.hello = 'world';
 }
+
+const test = [
+  {
+    a: 'a'
+  }
+];

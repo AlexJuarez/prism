@@ -52,7 +52,10 @@ function createConstructor(paramNames) {
 
 function createSpecificImport(names, from) {
   return t.importDeclaration(
-    names.map(name => t.importSpecifier(t.identifier(name), t.identifier(name))),
+    names.map(name => {
+      const id = t.identifier(name);
+      return t.importSpecifier(id, id)
+    }),
     t.stringLiteral(from),
   );
 }
