@@ -4,6 +4,14 @@ function capitalize(str) {
   return `${str.substr(0, 1).toUpperCase()}${str.substr(1)}`;
 }
 
+function isObject(o) {
+  return o != null && typeof o === 'object' && !Array.isArray(o);
+}
+
+function isNode(o) {
+  return isObject(o) && o.type != null;
+}
+
 function matches(a, b) {
   if (typeof b === 'function') {
     return b(a);
@@ -14,12 +22,23 @@ function matches(a, b) {
   }
 
   if (Array.isArray(b)) {
-    const set = new Set(a);
+    const unmatched = [...a];
 
-    return b.every(e => set.has(e));
+    return b.every(e => {      
+      for (let i = 0; i < unmatched.length; i++) {
+        const d = unmatched[i];
+        if (matches(d, e)) {
+          unmatched.splice(i, 1);
+
+          return true
+        }
+      }
+
+      return false;
+    });
   }
 
-  if (a != null && b != null && typeof a === 'object') {
+  if (isNode(a) && isObject(b)) {
     return Object.keys(b).every(key => matches(a[key], b[key]));
   }
 
@@ -41,17 +60,19 @@ function find(ast, type, selectors) {
     const { node } = path;
 
     Object.keys(node).forEach(key => {
-      if (node[key] == null || node[key].type == null && !Array.isArray(node[key])) {
-        return;
-      }
+      const child = node[key];
 
-      if (Array.isArray(node[key])) {
-        node[key].forEach(e => {
-          if (e != null && e.type != null) {
+      if (Array.isArray(child)) {
+        child.forEach(e => {
+          if (isNode(e)) {
             queue.push(new Path(e, path, key));
           }
         });
 
+        return;
+      }
+
+      if (!isNode(child)) {
         return;
       }
 
