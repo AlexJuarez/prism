@@ -28,7 +28,7 @@ root.find('identifier', { name: 'test' }).forEach(path => {
 | remove | `(): chain` | no | remove the selected nodes |
 | filter | `(fn: function): chain` | yes | filter the selected nodes |
 | size | `(): number` | no | return the number of selected nodes |
-| closest | `(type: string | function, selectors: any): chain` | yes | selects the closest direct parents of the given node that match the selectors |
+| closest | `(type: string \| function, selectors: any): chain` | yes | selects the closest direct parents of the given node that match the selectors |
 | nodes | `(): Array<Nodes>` | no | returns the selected nodes |
 | map | `(fn: function): chain` | yes | map the function given across the selected nodes |
 
@@ -39,4 +39,4 @@ root.find('identifier', { name: 'test' }).forEach(path => {
 | `function` | `fn(node) === true`? |
 | `array` | Do any of the objects in the selection array match objects in the object array |
 | `object` | Does selection\[key\] match the object\[key\] |
-| `number | string | any` | does the selection match the given value |
+| `number \| string \| any` | does the selection match the given value |
