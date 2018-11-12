@@ -22,7 +22,7 @@ root.find('identifier', { name: 'test' }).forEach(path => {
 
 | method | arguments | modifies selection | description |
 | --- | --- | --- | --- |
-| find | `(type: string | function, selectors: any): chain` | yes | select nodes that are children of the given nodes based on selectors |
+| find | `(type: string \| function, selectors: any): chain` | yes | select nodes that are children of the given nodes based on selectors |
 | forEach | `(fn: function): chain` | no | for each node in the selection do the given function |
 | replaceWith | `(fn: function): chain` | no | replace each node in the selection with the function |
 | remove | `(): chain` | no | remove the selected nodes |
