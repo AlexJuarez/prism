@@ -10,3 +10,5 @@ This repository is a collection of ast transforms and a runner to make the migra
 
 ### Run
 - `npm start`
+
+See [@prism-selector](packages/selector)
